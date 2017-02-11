@@ -1,0 +1,6 @@
+use_frameworks!
+target 'DAO_Tests' do
+  pod 'DAO', :path => '../'
+  
+  
+end
