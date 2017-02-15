@@ -1,0 +1,6 @@
+framework module DAO {
+  umbrella header "DAO-umbrella.h"
+
+  export *
+  module * { export * }
+}
