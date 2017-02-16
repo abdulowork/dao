@@ -10,13 +10,15 @@ import Foundation
 import DAO
 import RealmSwift
 
-class ItemRealmDAO: Object, RealmDAO {
+class ItemRealmDAO: Object, RealmDAO, CascadeRealmObject {
+
   
   typealias PrimaryKeyType = String
   typealias EntityType = Item
   typealias EntryType = ItemRealmDAO
   
   dynamic var name: String! = ""
+  dynamic var cascadeProperty: SomeRealmObject? = SomeRealmObject()
   
   var operationalRealm: Realm {
     return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestableRealm"))
@@ -35,6 +37,10 @@ class ItemRealmDAO: Object, RealmDAO {
   
   override static func primaryKey() -> String? {
     return "name"
+  }
+  
+  var cascadeProperties: [Object] {
+    return [cascadeProperty!]
   }
   
 }

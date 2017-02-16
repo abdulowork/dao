@@ -15,7 +15,7 @@ public protocol RealmDAO: DAO {
   
 }
 
-public extension RealmDAO where EntryType: Object, EntryType: Equatable {
+public extension RealmDAO where EntryType: Object, EntryType: Equatable & CascadeRealmObject {
   
   //Не решена проблема дупликации
   func persist(entity: Self.EntityType) throws {
@@ -29,27 +29,49 @@ public extension RealmDAO where EntryType: Object, EntryType: Equatable {
       operationalRealm.add(entities.map{ translator().map(entity: $0) }, update: true)
     }
   }
+  
+  private func removeCascadeProperties<CascadeObject: CascadeRealmObject where CascadeObject: Object>(object: CascadeObject) throws {
+    for property in object.cascadeProperties {
+      if let property = property as? CascadeObject {
+        try removeCascadeProperties(object: property)
+      }
+      try operationalRealm.write {
+        operationalRealm.delete(property)
+      }
+    }
+  }
 
   func remove(entity: Self.EntityType) throws {
-    let entry = translator().map(entity: entity)
+    let entryCopy = translator().map(entity: entity)
+    let existantRealmEntriesMatchingCopy = try operationalRealm.objects(EntryType.self).filter{ try $0 == entryCopy }
+    for entry in existantRealmEntriesMatchingCopy {
+      try removeCascadeProperties(object: entry)
+    }
     
     try operationalRealm.write {
-      operationalRealm.delete(operationalRealm.objects(EntryType.self).filter{ $0 == entry })
+      operationalRealm.delete(existantRealmEntriesMatchingCopy)
     }
   }
   
   func remove(entities: [Self.EntityType]) throws {
-    let entries = entities.map{ translator().map(entity: $0) }
-    
+    let entriesCopy = entities.map{ translator().map(entity: $0) }
+    let existantRealmEntriesMatchingCopies = try operationalRealm.objects(EntryType.self).filter{ entriesCopy.contains($0) }
+    for entry in existantRealmEntriesMatchingCopies {
+      try removeCascadeProperties(object: entry)
+    }
     try operationalRealm.write {
-      operationalRealm.delete(operationalRealm.objects(EntryType.self).filter{ entries.contains($0) } )
+      operationalRealm.delete(existantRealmEntriesMatchingCopies)
     }
   }
   
   func purge() throws {
-    let entries = operationalRealm.objects(EntryType.self)
+    let existanceRealmEntries = operationalRealm.objects(EntryType.self)
+    for entry in existanceRealmEntries {
+      try removeCascadeProperties(object: entry)
+    }
+    
     try operationalRealm.write {
-      operationalRealm.delete(entries)
+      operationalRealm.delete(existanceRealmEntries)
     }
   }
 
@@ -74,3 +96,13 @@ public extension RealmDAO where EntryType: Object, EntryType: Equatable {
   }
   
 }
+
+public protocol CascadeRealmObject {
+  var cascadeProperties: [Object] { get }
+}
+
+//public extension CascadeRealmObject {
+//  var cascadeProperties: [Object] {
+//    return []
+//  }
+//}
