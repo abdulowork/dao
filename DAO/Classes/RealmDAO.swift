@@ -30,11 +30,9 @@ public extension RealmDAO where EntryType: Object, EntryType: Equatable & Cascad
     }
   }
   
-  private func removeCascadeProperties<CascadeObject: CascadeRealmObject where CascadeObject: Object>(object: CascadeObject) throws {
+  private func removeCascadeProperties(object: Object) throws {
     for property in object.cascadeProperties {
-      if let property = property as? CascadeObject {
-        try removeCascadeProperties(object: property)
-      }
+      try removeCascadeProperties(object: property)
       try operationalRealm.write {
         operationalRealm.delete(property)
       }
@@ -43,7 +41,7 @@ public extension RealmDAO where EntryType: Object, EntryType: Equatable & Cascad
 
   func remove(entity: Self.EntityType) throws {
     let entryCopy = translator().map(entity: entity)
-    let existantRealmEntriesMatchingCopy = try operationalRealm.objects(EntryType.self).filter{ try $0 == entryCopy }
+    let existantRealmEntriesMatchingCopy = try operationalRealm.objects(EntryType.self).filter{ $0 == entryCopy }
     for entry in existantRealmEntriesMatchingCopy {
       try removeCascadeProperties(object: entry)
     }
@@ -101,8 +99,8 @@ public protocol CascadeRealmObject {
   var cascadeProperties: [Object] { get }
 }
 
-//public extension CascadeRealmObject {
-//  var cascadeProperties: [Object] {
-//    return []
-//  }
-//}
+extension Object: CascadeRealmObject {
+  open var cascadeProperties: [Object] {
+    return []
+  }
+}

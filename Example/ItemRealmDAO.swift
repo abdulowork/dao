@@ -10,7 +10,7 @@ import Foundation
 import DAO
 import RealmSwift
 
-class ItemRealmDAO: Object, RealmDAO, CascadeRealmObject {
+class ItemRealmDAO: Object, RealmDAO {
 
   
   typealias PrimaryKeyType = String
@@ -39,7 +39,7 @@ class ItemRealmDAO: Object, RealmDAO, CascadeRealmObject {
     return "name"
   }
   
-  var cascadeProperties: [Object] {
+  override var cascadeProperties: [Object] {
     return [cascadeProperty!]
   }
   
