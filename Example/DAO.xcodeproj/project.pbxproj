@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		61F3E685581761A3FAF858D7 /* Pods_DAO_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F3F8E4C5C29CEAF3535FF9 /* Pods_DAO_Tests.framework */; };
-		96146F5A1E55E3AB00280D36 /* SomeRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96146F591E55E3AB00280D36 /* SomeRealmObject.swift */; };
 		9653BC931E549970009B91A5 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9653BC921E549970009B91A5 /* Item.swift */; };
 		9653BC961E549A3D009B91A5 /* ItemRealmDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9653BC951E549A3D009B91A5 /* ItemRealmDAO.swift */; };
+		96BB19EE1E58B7FA00990F37 /* ItemArrayDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB19ED1E58B7FA00990F37 /* ItemArrayDAO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,9 +22,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		8E2ED53F06E71DE3FFBB5ACB /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		96146F591E55E3AB00280D36 /* SomeRealmObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SomeRealmObject.swift; sourceTree = "<group>"; };
 		9653BC921E549970009B91A5 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		9653BC951E549A3D009B91A5 /* ItemRealmDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemRealmDAO.swift; path = ../ItemRealmDAO.swift; sourceTree = "<group>"; };
+		96BB19ED1E58B7FA00990F37 /* ItemArrayDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemArrayDAO.swift; sourceTree = "<group>"; };
 		B63CE2D9DEEDCE38CA831D23 /* DAO.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DAO.podspec; path = ../DAO.podspec; sourceTree = "<group>"; };
 		D4C2BC60A275EC288C4F1EC0 /* Pods-DAO_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DAO_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DAO_Tests/Pods-DAO_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,7 +110,7 @@
 			children = (
 				9653BC921E549970009B91A5 /* Item.swift */,
 				9653BC951E549A3D009B91A5 /* ItemRealmDAO.swift */,
-				96146F591E55E3AB00280D36 /* SomeRealmObject.swift */,
+				96BB19ED1E58B7FA00990F37 /* ItemArrayDAO.swift */,
 			);
 			name = "Use case";
 			sourceTree = "<group>";
@@ -236,7 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96146F5A1E55E3AB00280D36 /* SomeRealmObject.swift in Sources */,
+				96BB19EE1E58B7FA00990F37 /* ItemArrayDAO.swift in Sources */,
 				9653BC931E549970009B91A5 /* Item.swift in Sources */,
 				9653BC961E549A3D009B91A5 /* ItemRealmDAO.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,

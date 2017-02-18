@@ -18,7 +18,6 @@ class ItemRealmDAO: Object, RealmDAO {
   typealias EntryType = ItemRealmDAO
   
   dynamic var name: String! = ""
-  dynamic var cascadeProperty: SomeRealmObject? = SomeRealmObject()
   
   var operationalRealm: Realm {
     return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "TestableRealm"))
@@ -37,10 +36,6 @@ class ItemRealmDAO: Object, RealmDAO {
   
   override static func primaryKey() -> String? {
     return "name"
-  }
-  
-  override var cascadeProperties: [Object] {
-    return [cascadeProperty!]
   }
   
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AnyDAO<Entity, Entry, PrimaryKey>: DAO {
+public final class AnyDAO<Entity, Entry, PrimaryKey>: DAO {
   
   public typealias EntityType = Entity
   public typealias EntryType = Entry
