@@ -8,23 +8,21 @@
 
 import Foundation
 
-public final class AnyDAO<Entity, Entry, PrimaryKey>: DAO {
+public final class AnyDAO<Entity: Persistable>: DAO {
   
   public typealias EntityType = Entity
-  public typealias EntryType = Entry
-  public typealias PrimaryKeyType = PrimaryKey
   
   private let _persist: (EntityType) throws -> Void
   private let _persistMultiple: ([EntityType]) throws -> Void
   private let _getAll: (Void) -> [EntityType]
-  private let _get: (PrimaryKeyType) -> EntityType?
+  private let _get: (EntityType.PrimaryKeyType) -> EntityType?
   private let _remove: (EntityType) throws -> Void
   private let _removeMultiple: ([EntityType]) throws -> Void
   private let _update: (EntityType) throws -> Void
   private let _updateMultiple: ([EntityType]) throws -> Void
-  private let _getTranslator: () -> AnyTranslator<EntityType, EntryType>
+  private let _purge: () throws -> Void
   
-  public init<Base: DAO where Base.EntityType == Entity, Base.EntryType == Entry, Base.PrimaryKeyType == PrimaryKey>(base: Base) {
+  public init<Base: DAO where Base.EntityType == Entity>(base: Base) {
     _persist          = base.persist
     _persistMultiple  = base.persist
     _getAll           = base.getAll
@@ -33,11 +31,7 @@ public final class AnyDAO<Entity, Entry, PrimaryKey>: DAO {
     _updateMultiple   = base.update
     _remove           = base.remove
     _removeMultiple   = base.remove
-    _getTranslator    = base.translator
-  }
-  
-  public func translator() -> AnyTranslator<EntityType, EntryType> {
-    return _getTranslator()
+    _purge            = base.purge
   }
   
   public func persist(entity: EntityType) throws {
@@ -52,8 +46,8 @@ public final class AnyDAO<Entity, Entry, PrimaryKey>: DAO {
     return _getAll()
   }
   
-  public func get(forPrimaryKey: PrimaryKeyType) -> EntityType? {
-    return _get(forPrimaryKey)
+  public func get(for primaryKey: EntityType.PrimaryKeyType) -> EntityType? {
+    return _get(primaryKey)
   }
   
   public func update(entity: EntityType) throws {
@@ -70,6 +64,10 @@ public final class AnyDAO<Entity, Entry, PrimaryKey>: DAO {
   
   public func remove(entities: [EntityType]) throws {
     try _removeMultiple(entities)
+  }
+  
+  public func purge() throws {
+    try _purge()
   }
 
 }

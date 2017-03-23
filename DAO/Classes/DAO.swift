@@ -10,19 +10,16 @@ import Foundation
 
 public protocol DAO {
   
-  associatedtype EntityType
-  associatedtype EntryType
-  associatedtype PrimaryKeyType
+  associatedtype EntityType: Persistable
   
   func persist(entity: EntityType) throws
   func persist(entities: [EntityType]) throws
   func getAll() -> [EntityType]
-  func get(forPrimaryKey: PrimaryKeyType) -> EntityType?
+  func get(for primaryKey: EntityType.PrimaryKeyType) -> EntityType?
   func update(entity: EntityType) throws
   func update(entities: [EntityType]) throws
   func remove(entity: EntityType) throws
   func remove(entities: [EntityType]) throws
-  
-  func translator() -> AnyTranslator<EntityType, EntryType>
+  func purge() throws
   
 }
